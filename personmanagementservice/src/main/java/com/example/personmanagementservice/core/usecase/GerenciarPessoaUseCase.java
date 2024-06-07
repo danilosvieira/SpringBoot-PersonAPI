@@ -47,6 +47,9 @@ public class GerenciarPessoaUseCase implements GerenciarPessoaPortIn {
                 .findFirst();
 
         if(indexOpt.isPresent()){
+            if(pessoa.getId() == null)
+                pessoa.setId(id);
+
             int index = indexOpt.getAsInt();
             lista.set(index, pessoa);
         } else {

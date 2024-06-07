@@ -1,7 +1,11 @@
 package com.example.personmanagementservice.adapter.in.controller;
 
+import com.example.personmanagementservice.adapter.in.controller.dto.PessoaDto;
+import com.example.personmanagementservice.adapter.in.controller.dto.PessoaPatchDto;
+import com.example.personmanagementservice.adapter.in.controller.mapper.PessoaMapper;
 import com.example.personmanagementservice.core.domain.Pessoa;
 import com.example.personmanagementservice.core.usecase.port.in.GerenciarPessoaPortIn;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,14 +27,14 @@ public class GerenciarPessoaController {
     }
 
     @PutMapping("person/{id}")
-    public ResponseEntity<Object> atualizarPessoa(@PathVariable(value = "id") Integer id, @RequestBody Pessoa pessoa){
-        gerenciarPessoaPortIn.alterar(id, pessoa);
+    public ResponseEntity<Object> atualizarPessoa(@PathVariable(value = "id") Integer id, @RequestBody PessoaDto pessoaDto){
+        gerenciarPessoaPortIn.alterar(id, PessoaMapper.pessoaDtoToDomain(pessoaDto));
         return ResponseEntity.status(HttpStatus.OK).body("SUCESS: Pessoa atualizada com sucesso.");
     }
 
     @PatchMapping("person/{id}")
-    public ResponseEntity<Object> atualizarAtributoPessoa(@PathVariable(value = "id") Integer id, @RequestBody Pessoa pessoa){
-        gerenciarPessoaPortIn.alterarAtributo(id, pessoa);
+    public ResponseEntity<Object> atualizarAtributoPessoa(@PathVariable(value = "id") Integer id, @Valid @RequestBody PessoaPatchDto pessoaPatchDto){
+        gerenciarPessoaPortIn.alterarAtributo(id, PessoaMapper.pessoaPatchDtoToDomain(pessoaPatchDto));
         return ResponseEntity.status(HttpStatus.OK).body("SUCESS: Pessoa atualizada com sucesso.");
     }
 

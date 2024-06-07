@@ -14,7 +14,7 @@ Para executar a API, siga os passos abaixo:
 
 2. Navegue até o diretório do projeto:
    ```sh
-   cd SpringBoot-PersonAPI
+   cd SpringBoot-PersonAPI/personmanagementservice
    ```
 
 3. Compile o projeto:
@@ -65,8 +65,8 @@ A aplicação estará disponível em `http://localhost:8080`.
   {
       "id": 15,
       "nome": "Maria",
-      "dataNascimento":"1989-05-16",
-      "dataAdmissao":"2024-05-20"
+      "data_nascimento":"1989-05-16",
+      "data_admissao":"2024-05-20"
   }
   ```
 - **Resposta de Sucesso:**
@@ -96,8 +96,8 @@ A aplicação estará disponível em `http://localhost:8080`.
   {
       "id":20,
       "nome": "Paulo",
-      "dataNascimento":"1985-02-07",
-      "dataAdmissao":"2024-02-01"
+      "data_nascimento":"1985-02-07",
+      "data_admissao":"2024-02-01"
   }
   ```
 - **Resposta de Sucesso:**
@@ -114,7 +114,7 @@ A aplicação estará disponível em `http://localhost:8080`.
 - **Corpo da Requisição:**
   ```json
   {
-      "dataNascimento": "1989-04-20"
+      "data_nascimento": "1989-04-20"
   }
   ```
 - **Resposta de Sucesso:**
