@@ -1,7 +1,7 @@
 package com.example.personmanagementservice.core.usecase;
 
-import com.example.personmanagementservice.adapter.in.controller.config.GerenciadorPessoas;
 import com.example.personmanagementservice.core.domain.Pessoa;
+import com.example.personmanagementservice.core.usecase.config.GerenciadorPessoas;
 import com.example.personmanagementservice.core.usecase.port.in.ConsultaListaPessoasPortIn;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.example.personmanagementservice.adapter.in.controller.config;
+package com.example.personmanagementservice.core.usecase.config;
 
 import com.example.personmanagementservice.core.domain.Pessoa;
 import jakarta.annotation.PostConstruct;

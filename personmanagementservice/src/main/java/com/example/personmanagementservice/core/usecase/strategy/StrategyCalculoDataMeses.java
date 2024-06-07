@@ -1,5 +1,6 @@
 package com.example.personmanagementservice.core.usecase.strategy;
 
+import com.example.personmanagementservice.core.usecase.enums.AgeOutputEnum;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -13,7 +14,7 @@ public class StrategyCalculoDataMeses implements StrategyCalculoData{
     }
 
     @Override
-    public UnidadeTempoEnum getUnidadeTempo() {
-        return UnidadeTempoEnum.months;
+    public AgeOutputEnum getUnidadeTempo() {
+        return AgeOutputEnum.months;
     }
 }
