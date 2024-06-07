@@ -10,4 +10,8 @@ public interface GerenciarPessoaPortIn {
     void alterarAtributo(Integer id, Pessoa pessoa);
 
     Pessoa consultar(Integer id);
+
+    Integer calcularIdadeAtual(Integer id, String unidadeTempo);
+
+    String calcularSalario(Integer id, String output);
 }

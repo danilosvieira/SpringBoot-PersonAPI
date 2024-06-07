@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -60,6 +61,18 @@ public class PessoaController {
     public ResponseEntity<Object> getPessoa(@PathVariable(value = "id") Integer id){
         Pessoa pessoa = gerenciarPessoaUseCase.consultar(id);
         return ResponseEntity.status(HttpStatus.OK).body(pessoa);
+    }
+
+    @GetMapping("person/{id}/age")
+    public ResponseEntity<Object> getIdadePessoa(@PathVariable(value = "id") Integer id, @RequestParam String output){
+        Integer idade = gerenciarPessoaUseCase.calcularIdadeAtual(id, output);
+        return ResponseEntity.status(HttpStatus.OK).body(idade);
+    }
+
+    @GetMapping("person/{id}/salary")
+    public ResponseEntity<Object> getSalarioPessoa(@PathVariable(value = "id") Integer id, @RequestParam String output){
+        String salario = gerenciarPessoaUseCase.calcularSalario(id, output);
+        return ResponseEntity.status(HttpStatus.OK).body(salario);
     }
 
 }
