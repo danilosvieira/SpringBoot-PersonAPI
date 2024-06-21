@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -35,15 +34,11 @@ public class CalcularIdadePessoaUseCase implements CalcularIdadePessoaPortIn {
             throw new OutputAgeException();
         }
 
-        Optional<Pessoa> pessoaOpt = gerenciadorPessoas.getListaPessoas().stream()
-                .filter(p -> p.getId().equals(id))
-                .findFirst();
-
         Pessoa pessoa = null;
         Integer idade = null;
 
-        if (pessoaOpt.isPresent()) {
-            pessoa = pessoaOpt.get();
+        if(gerenciadorPessoas.getMapaPessoas().containsKey(id)){
+            pessoa = gerenciadorPessoas.getMapaPessoas().get(id);
 
             StrategyCalculoData strategyCalculoData = strategyFactory.findStrategy(output);
             idade = strategyCalculoData.calcularDiferencaEntreDatas(pessoa.getDataNascimento(), LocalDate.now());
