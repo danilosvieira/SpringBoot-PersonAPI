@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 @Service
 @RequiredArgsConstructor
@@ -21,8 +23,12 @@ public class ConsultaListaPessoasUseCase implements ConsultaListaPessoasPortIn {
 
     @Override
     public List<Pessoa> consultarPessoas() {
-        return gerenciadorPessoas.getListaPessoas().stream()
-                .sorted((p1, p2) -> p1.getNome().compareTo(p2.getNome()))
-                .toList();
+        Map<String, Pessoa> mapaOrdenadoPorNome = new TreeMap<>();
+
+        for(Pessoa pessoa : gerenciadorPessoas.getMapaPessoas().values()){
+            mapaOrdenadoPorNome.put(pessoa.getNome() + pessoa.getId(), pessoa);
+        }
+
+        return mapaOrdenadoPorNome.values().stream().toList();
     }
 }

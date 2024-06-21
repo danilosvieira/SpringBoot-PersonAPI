@@ -10,11 +10,6 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.OptionalInt;
-import java.util.stream.IntStream;
-
 @Service
 @RequiredArgsConstructor
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
@@ -25,13 +20,9 @@ public class GerenciarPessoaUseCase implements GerenciarPessoaPortIn {
 
     @Override
     public void deletar(Integer id) {
-        Optional<Pessoa> pessoaOpt = gerenciadorPessoas.getListaPessoas().stream()
-                .filter(p -> p.getId().equals(id))
-                .findFirst();
 
-        if (pessoaOpt.isPresent()) {
-            gerenciadorPessoas.getListaPessoas()
-                    .removeIf(pessoa -> pessoa.getId().equals(id));
+        if(gerenciadorPessoas.getMapaPessoas().containsKey(id)){
+            gerenciadorPessoas.getMapaPessoas().remove(id);
         } else {
             throw new IdNotFoundException(id);
         }
@@ -40,18 +31,11 @@ public class GerenciarPessoaUseCase implements GerenciarPessoaPortIn {
     @Override
     public void alterar(Integer id, Pessoa pessoa) {
 
-        List<Pessoa> lista = gerenciadorPessoas.getListaPessoas();
-
-        OptionalInt indexOpt = IntStream.range(0, lista.size())
-                .filter(i -> lista.get(i).getId().equals(id))
-                .findFirst();
-
-        if(indexOpt.isPresent()){
+        if(gerenciadorPessoas.getMapaPessoas().containsKey(id)){
             if(pessoa.getId() == null)
                 pessoa.setId(id);
 
-            int index = indexOpt.getAsInt();
-            lista.set(index, pessoa);
+            gerenciadorPessoas.getMapaPessoas().replace(id, pessoa);
         } else {
             throw new IdNotFoundException(id);
         }
@@ -61,12 +45,8 @@ public class GerenciarPessoaUseCase implements GerenciarPessoaPortIn {
     @Override
     public void alterarAtributo(Integer id, Pessoa pessoaAlterado) {
 
-        Optional<Pessoa> pessoaOpt = gerenciadorPessoas.getListaPessoas().stream()
-                .filter(p -> p.getId().equals(id))
-                .findFirst();
-
-        if (pessoaOpt.isPresent()) {
-            Pessoa pessoa = pessoaOpt.get();
+        if(gerenciadorPessoas.getMapaPessoas().containsKey(id)){
+            Pessoa pessoa = gerenciadorPessoas.getMapaPessoas().get(id);
 
             if (pessoaAlterado.getNome() != null)
                 pessoa.setNome(pessoaAlterado.getNome());
@@ -84,18 +64,11 @@ public class GerenciarPessoaUseCase implements GerenciarPessoaPortIn {
 
     @Override
     public Pessoa consultar(Integer id) {
-        Optional<Pessoa> pessoaOpt = gerenciadorPessoas.getListaPessoas().stream()
-                .filter(p -> p.getId().equals(id))
-                .findFirst();
-
-        Pessoa pessoa = null;
-
-        if (pessoaOpt.isPresent()) {
-            pessoa = pessoaOpt.get();
+        if(gerenciadorPessoas.getMapaPessoas().containsKey(id)){
+            return gerenciadorPessoas.getMapaPessoas().get(id);
         } else {
             throw new IdNotFoundException(id);
         }
-        return pessoa;
     }
 
 }

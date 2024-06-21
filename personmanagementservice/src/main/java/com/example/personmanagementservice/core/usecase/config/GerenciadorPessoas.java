@@ -8,38 +8,40 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 @Getter
 public class GerenciadorPessoas {
-    private List<Pessoa> listaPessoas;
+
+    private Map<Integer,Pessoa> mapaPessoas;
 
     @PostConstruct
-    private void inicializarLista() {
-        listaPessoas = new ArrayList<>();
+    private void inicializarMapa() {
+        mapaPessoas = new TreeMap<>();
 
-        listaPessoas.add(Pessoa.builder()
-                        .id(10)
-                        .nome("Pedro")
-                        .dataNascimento(LocalDate.of(1988,6,20))
-                        .dataAdmissao(LocalDate.of(2021,3,1))
+        mapaPessoas.put(10, Pessoa.builder()
+                .id(10)
+                .nome("Pedro")
+                .dataNascimento(LocalDate.of(1988,6,20))
+                .dataAdmissao(LocalDate.of(2021,3,1))
                 .build());
 
-        listaPessoas.add(Pessoa.builder()
-                .id(11)
+        mapaPessoas.put(13, Pessoa.builder()
+                .id(13)
                 .nome("Fernanda")
                 .dataNascimento(LocalDate.of(1993,8,3))
                 .dataAdmissao(LocalDate.of(2022,5,15))
                 .build());
 
-        listaPessoas.add(Pessoa.builder()
+        mapaPessoas.put(12, Pessoa.builder()
                 .id(12)
                 .nome("Natan")
                 .dataNascimento(LocalDate.of(1990,12,5))
                 .dataAdmissao(LocalDate.of(2022,11,1))
                 .build());
+
     }
 }

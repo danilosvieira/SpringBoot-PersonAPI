@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,15 +31,11 @@ public class CalcularSalarioPessoaUseCase implements CalcularSalarioPessoaPortIn
             throw new OutputSalaryException();
         }
 
-        Optional<Pessoa> pessoaOpt = gerenciadorPessoas.getListaPessoas().stream()
-                .filter(p -> p.getId().equals(id))
-                .findFirst();
-
         Pessoa pessoa = null;
         double salario = 0;
 
-        if (pessoaOpt.isPresent()) {
-            pessoa = pessoaOpt.get();
+        if(gerenciadorPessoas.getMapaPessoas().containsKey(id)){
+            pessoa = gerenciadorPessoas.getMapaPessoas().get(id);
 
             long numAnos = ChronoUnit.YEARS.between(pessoa.getDataAdmissao(), LocalDate.now());
 

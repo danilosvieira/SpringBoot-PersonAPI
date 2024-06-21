@@ -10,9 +10,7 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.TreeMap;
 
 @Service
 @RequiredArgsConstructor
@@ -24,24 +22,22 @@ public class InserirPessoaUseCase implements InserirPessoaPortIn {
 
     @Override
     public void inserir(Pessoa pessoa) {
-        List<Pessoa> listaPessoas = gerenciadorPessoas.getListaPessoas();
+
+        TreeMap<Integer,Pessoa> mapa = (TreeMap<Integer, Pessoa>) gerenciadorPessoas.getMapaPessoas();
 
         if(pessoa.getId() == null) {
-            if (listaPessoas.isEmpty()) {
+            if (mapa.isEmpty()) {
                 pessoa.setId(1);
             } else {
-                Optional<Pessoa> maiorId = listaPessoas.stream()
-                        .max(Comparator.comparing(Pessoa::getId));
-
-                maiorId.ifPresent(p -> pessoa.setId(p.getId() + 1));
+                Integer lastId = mapa.lastKey();
+                pessoa.setId(lastId + 1);
             }
         }
 
-        if (listaPessoas.stream()
-                .anyMatch(p -> p.getId().equals(pessoa.getId()))) {
+        if (mapa.containsKey(pessoa.getId())) {
             throw new ExistingIdException(pessoa.getId());
         } else {
-            listaPessoas.add(pessoa);
+            mapa.put(pessoa.getId(), pessoa);
         }
     }
 }
